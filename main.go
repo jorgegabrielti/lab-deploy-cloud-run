@@ -37,9 +37,9 @@ func main() {
 	}
 
 	go func() {
-		log.Printf("🚀 Servidor Clima por CEP iniciado na porta %s...", port)
+		log.Printf("server starting on port %s...", port)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("Erro ao iniciar servidor HTTP: %v", err)
+			log.Fatalf("server error: %v", err)
 		}
 	}()
 
@@ -47,13 +47,13 @@ func main() {
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 
-	log.Println("🛑 Encerrando servidor graciosamente...")
+	log.Println("shutting down server...")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatalf("Erro no shutdown do servidor: %v", err)
+		log.Fatalf("shutdown error: %v", err)
 	}
 
-	log.Println("👋 Servidor finalizado com sucesso.")
+	log.Println("server stopped")
 }
