@@ -1,0 +1,5 @@
+/server
+/desafio-clima-cep
+*.exe
+*.out
+.env
